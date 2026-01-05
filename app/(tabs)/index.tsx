@@ -1,4 +1,4 @@
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView, Text, View, Image, Linking } from 'react-native';
 import { useRouter } from 'expo-router';
 import { ScreenContainer } from '@/components/screen-container';
 import { LoanCard } from '@/components/loan-card';
@@ -55,21 +55,34 @@ export default function HomeScreen() {
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
       >
-        {/* Header */}
-        <View className="mb-8">
-          <Text className="text-4xl font-bold text-foreground mb-2">
-            FINE
+        {/* Logo Header */}
+        <View className="mb-6 items-center">
+          <Image
+            source={require('@/assets/images/logo.png')}
+            style={{ width: 140, height: 90 }}
+            resizeMode="contain"
+          />
+        </View>
+
+        {/* Website Link */}
+        <View className="mb-6 items-center">
+          <Text
+            onPress={() => Linking.openURL('https://finebr.com')}
+            className="text-sm font-semibold text-primary"
+          >
+            Visite finebr.com
           </Text>
-          <Text className="text-base text-muted">
-            Simulador de Empréstimo
-          </Text>
-          <Text className="text-sm text-muted mt-2">
+        </View>
+
+        {/* Subtitle */}
+        <View className="mb-8 items-center">
+          <Text className="text-base text-muted text-center leading-relaxed">
             Escolha o tipo de simulação desejado
           </Text>
         </View>
 
         {/* Loan Type Cards */}
-        <View className="gap-0">
+        <View className="gap-3">
           {LOAN_TYPES.map((loan) => (
             <LoanCard
               key={loan.id}
@@ -81,8 +94,8 @@ export default function HomeScreen() {
 
         {/* Footer Info */}
         <View className="mt-8 p-4 bg-surface rounded-lg border border-border">
-          <Text className="text-xs text-muted text-center">
-            Simule diferentes tipos de empréstimo e veja o retorno em R$ e %.
+          <Text className="text-xs text-muted text-center leading-relaxed">
+            Simule diferentes tipos de empréstimo e visualize o retorno em R$ e %.
           </Text>
         </View>
       </ScrollView>

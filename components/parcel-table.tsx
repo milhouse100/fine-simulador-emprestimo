@@ -1,12 +1,29 @@
 import { ScrollView, Text, View } from 'react-native';
-import { ParcelDetail } from '@/lib/types';
+import { ParcelDetail, LoanType } from '@/lib/types';
 import { formatCurrency } from '@/lib/loan-calculator';
 
 interface ParcelTableProps {
   parcels: ParcelDetail[];
+  loanType: LoanType;
 }
 
-export function ParcelTable({ parcels }: ParcelTableProps) {
+export function ParcelTable({ parcels, loanType }: ParcelTableProps) {
+  // Determinar quais colunas mostrar baseado no tipo de empréstimo
+  const showPrincipal = loanType !== 'interest-only';
+  const showInterest = loanType !== 'simple-interest';
+  const showBalance = loanType !== 'interest-only';
+
+  // Definir colunas dinamicamente
+  const columns = [
+    { key: 'number', label: 'Parc.', width: 50 },
+    { key: 'value', label: 'Valor', width: 70 },
+    ...(showInterest ? [{ key: 'interest', label: 'Juros', width: 70 }] : []),
+    ...(showPrincipal ? [{ key: 'principal', label: 'Principal', width: 80 }] : []),
+    ...(showBalance ? [{ key: 'balance', label: 'Saldo', width: 70 }] : []),
+  ];
+
+  const totalWidth = columns.reduce((sum, col) => sum + col.width, 0);
+
   return (
     <View className="mt-6">
       <Text className="text-lg font-semibold text-foreground mb-4">
@@ -18,24 +35,20 @@ export function ParcelTable({ parcels }: ParcelTableProps) {
         showsHorizontalScrollIndicator={false}
         className="border border-border rounded-lg overflow-hidden"
       >
-        <View>
+        <View style={{ width: Math.max(totalWidth, 280) }}>
           {/* Header */}
           <View className="flex-row bg-primary/10 border-b border-border">
-            <View className="w-16 px-3 py-3 items-center justify-center">
-              <Text className="text-xs font-bold text-foreground">Parc.</Text>
-            </View>
-            <View className="w-24 px-3 py-3 items-center justify-center">
-              <Text className="text-xs font-bold text-foreground">Valor</Text>
-            </View>
-            <View className="w-24 px-3 py-3 items-center justify-center">
-              <Text className="text-xs font-bold text-foreground">Juros</Text>
-            </View>
-            <View className="w-24 px-3 py-3 items-center justify-center">
-              <Text className="text-xs font-bold text-foreground">Principal</Text>
-            </View>
-            <View className="w-24 px-3 py-3 items-center justify-center">
-              <Text className="text-xs font-bold text-foreground">Saldo</Text>
-            </View>
+            {columns.map((col) => (
+              <View
+                key={col.key}
+                style={{ width: col.width }}
+                className="px-2 py-3 items-center justify-center"
+              >
+                <Text className="text-xs font-bold text-foreground text-center">
+                  {col.label}
+                </Text>
+              </View>
+            ))}
           </View>
 
           {/* Rows */}
@@ -46,31 +59,39 @@ export function ParcelTable({ parcels }: ParcelTableProps) {
                 index % 2 === 0 ? 'bg-background' : 'bg-surface'
               }`}
             >
-              <View className="w-16 px-3 py-3 items-center justify-center">
-                <Text className="text-xs font-medium text-foreground">
-                  {parcel.number}
-                </Text>
-              </View>
-              <View className="w-24 px-3 py-3 items-center justify-center">
-                <Text className="text-xs font-medium text-foreground">
-                  {formatCurrency(parcel.value)}
-                </Text>
-              </View>
-              <View className="w-24 px-3 py-3 items-center justify-center">
-                <Text className="text-xs font-medium text-foreground">
-                  {formatCurrency(parcel.interest)}
-                </Text>
-              </View>
-              <View className="w-24 px-3 py-3 items-center justify-center">
-                <Text className="text-xs font-medium text-foreground">
-                  {formatCurrency(parcel.principal)}
-                </Text>
-              </View>
-              <View className="w-24 px-3 py-3 items-center justify-center">
-                <Text className="text-xs font-medium text-foreground">
-                  {formatCurrency(parcel.balance)}
-                </Text>
-              </View>
+              {columns.map((col) => {
+                let cellValue = '';
+
+                switch (col.key) {
+                  case 'number':
+                    cellValue = parcel.number.toString();
+                    break;
+                  case 'value':
+                    cellValue = formatCurrency(parcel.value);
+                    break;
+                  case 'interest':
+                    cellValue = formatCurrency(parcel.interest);
+                    break;
+                  case 'principal':
+                    cellValue = formatCurrency(parcel.principal);
+                    break;
+                  case 'balance':
+                    cellValue = formatCurrency(parcel.balance);
+                    break;
+                }
+
+                return (
+                  <View
+                    key={`${parcel.number}-${col.key}`}
+                    style={{ width: col.width }}
+                    className="px-2 py-3 items-center justify-center"
+                  >
+                    <Text className="text-xs font-medium text-foreground text-center">
+                      {cellValue}
+                    </Text>
+                  </View>
+                );
+              })}
             </View>
           ))}
         </View>
@@ -86,14 +107,24 @@ export function ParcelTable({ parcels }: ParcelTableProps) {
           <View className="w-2 h-2 rounded-full bg-primary mr-2" />
           <Text className="text-xs text-muted">Valor = Valor da parcela</Text>
         </View>
-        <View className="flex-row items-center">
-          <View className="w-2 h-2 rounded-full bg-primary mr-2" />
-          <Text className="text-xs text-muted">Principal = Amortização do principal</Text>
-        </View>
-        <View className="flex-row items-center">
-          <View className="w-2 h-2 rounded-full bg-primary mr-2" />
-          <Text className="text-xs text-muted">Saldo = Saldo devedor restante</Text>
-        </View>
+        {showInterest && (
+          <View className="flex-row items-center">
+            <View className="w-2 h-2 rounded-full bg-primary mr-2" />
+            <Text className="text-xs text-muted">Juros = Juros da parcela</Text>
+          </View>
+        )}
+        {showPrincipal && (
+          <View className="flex-row items-center">
+            <View className="w-2 h-2 rounded-full bg-primary mr-2" />
+            <Text className="text-xs text-muted">Principal = Amortização do principal</Text>
+          </View>
+        )}
+        {showBalance && (
+          <View className="flex-row items-center">
+            <View className="w-2 h-2 rounded-full bg-primary mr-2" />
+            <Text className="text-xs text-muted">Saldo = Saldo devedor restante</Text>
+          </View>
+        )}
       </View>
     </View>
   );

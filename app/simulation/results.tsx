@@ -51,7 +51,6 @@ export default function ResultsScreen() {
     try {
       const message = `FINE - Simulador de Empréstimo\n\nTipo: ${LOAN_TYPE_NAMES[input.type]}\nPrincipal: ${formatCurrency(input.principal)}\nParcelas: ${input.parcels}\nTotal a Pagar: ${formatCurrency(totalValue)}\nJuros: ${formatCurrency(totalInterest)} (${formatPercentage(interestPercentage)})`;
 
-      // Copiar para clipboard usando Share API
       await Share.share({
         message,
         title: 'Simulação de Empréstimo FINE',
@@ -68,15 +67,15 @@ export default function ResultsScreen() {
         showsVerticalScrollIndicator={false}
       >
         {/* Header */}
-        <View className="mb-6">
+        <View className="mb-8">
           <ActionButton
             label="← Voltar"
             onPress={() => router.back()}
             variant="outline"
             size="small"
           />
-          <Text className="text-3xl font-bold text-foreground mt-4 mb-2">
-            Resultado da Simulação
+          <Text className="text-3xl font-bold text-foreground mt-5 mb-2">
+            Resultado
           </Text>
           <Text className="text-sm text-muted">
             {LOAN_TYPE_NAMES[input.type]}
@@ -86,8 +85,8 @@ export default function ResultsScreen() {
         {/* Summary Cards */}
         <View className="gap-4 mb-8">
           {/* Principal Card */}
-          <View className="bg-surface rounded-lg p-4 border border-border">
-            <Text className="text-xs font-medium text-muted mb-1">
+          <View className="bg-surface rounded-lg p-5 border border-border">
+            <Text className="text-xs font-semibold text-muted mb-2">
               Valor do Empréstimo
             </Text>
             <Text className="text-2xl font-bold text-foreground">
@@ -96,8 +95,8 @@ export default function ResultsScreen() {
           </View>
 
           {/* Total Value Card - Highlighted */}
-          <View className="bg-primary/10 rounded-lg p-4 border-2 border-primary">
-            <Text className="text-xs font-medium text-muted mb-1">
+          <View className="bg-primary/10 rounded-lg p-5 border-2 border-primary">
+            <Text className="text-xs font-semibold text-muted mb-2">
               Total a Pagar
             </Text>
             <Text className="text-3xl font-bold text-primary">
@@ -106,34 +105,34 @@ export default function ResultsScreen() {
           </View>
 
           {/* Interest Card */}
-          <View className="bg-surface rounded-lg p-4 border border-border">
-            <Text className="text-xs font-medium text-muted mb-1">
+          <View className="bg-surface rounded-lg p-5 border border-border">
+            <Text className="text-xs font-semibold text-muted mb-2">
               Total de Juros
             </Text>
-            <View className="flex-row items-baseline gap-2">
+            <View className="flex-row items-baseline gap-3">
               <Text className="text-2xl font-bold text-foreground">
                 {formatCurrency(totalInterest)}
               </Text>
-              <Text className="text-lg font-semibold text-primary">
+              <Text className="text-lg font-bold text-primary">
                 {formatPercentage(interestPercentage)}
               </Text>
             </View>
           </View>
 
           {/* Parcel Info */}
-          <View className="bg-surface rounded-lg p-4 border border-border">
-            <Text className="text-xs font-medium text-muted mb-1">
+          <View className="bg-surface rounded-lg p-5 border border-border">
+            <Text className="text-xs font-semibold text-muted mb-3">
               Informações das Parcelas
             </Text>
-            <View className="flex-row justify-between mt-2">
+            <View className="flex-row justify-between">
               <View>
-                <Text className="text-xs text-muted">Quantidade</Text>
+                <Text className="text-xs text-muted mb-1">Quantidade</Text>
                 <Text className="text-xl font-bold text-foreground">
                   {parcels.length}x
                 </Text>
               </View>
               <View>
-                <Text className="text-xs text-muted">Valor Médio</Text>
+                <Text className="text-xs text-muted mb-1">Valor Médio</Text>
                 <Text className="text-xl font-bold text-foreground">
                   {formatCurrency(totalValue / parcels.length)}
                 </Text>
@@ -143,7 +142,7 @@ export default function ResultsScreen() {
         </View>
 
         {/* Parcel Table */}
-        <ParcelTable parcels={parcels} />
+        <ParcelTable parcels={parcels} loanType={input.type} />
 
         {/* Action Buttons */}
         <View className="gap-3 mt-8 mb-4">

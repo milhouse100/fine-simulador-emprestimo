@@ -36,8 +36,8 @@ export default function SimulationScreen() {
     }
 
     const parcelsNum = parseInt(parcels, 10);
-    if (!parcels || isNaN(parcelsNum) || parcelsNum < 1 || parcelsNum > 360) {
-      newErrors.parcels = 'Parcelas deve estar entre 1 e 360';
+    if (!parcels || isNaN(parcelsNum) || parcelsNum < 1 || parcelsNum > 36) {
+      newErrors.parcels = 'Parcelas deve estar entre 1 e 36';
     }
 
     if (type === 'fixed-parcel') {
@@ -109,7 +109,7 @@ export default function SimulationScreen() {
             variant="outline"
             size="small"
           />
-          <Text className="text-3xl font-bold text-foreground mt-4 mb-2">
+          <Text className="text-3xl font-bold text-foreground mt-5 mb-2">
             {loanTypeLabels[type || '']}
           </Text>
           <Text className="text-sm text-muted">
@@ -126,6 +126,7 @@ export default function SimulationScreen() {
             keyboardType="decimal-pad"
             placeholder="0.00"
             error={errors.principal}
+            helperText="Digite o valor que deseja emprestar"
           />
 
           <InputField
@@ -133,8 +134,9 @@ export default function SimulationScreen() {
             value={parcels}
             onChangeText={setParcels}
             keyboardType="numeric"
-            placeholder="1-360"
+            placeholder="1-36"
             error={errors.parcels}
+            helperText="Mínimo 1, máximo 36 parcelas"
           />
 
           {type === 'fixed-parcel' ? (
@@ -145,6 +147,7 @@ export default function SimulationScreen() {
               keyboardType="decimal-pad"
               placeholder="0.00"
               error={errors.fixedParcelValue}
+              helperText="Defina o valor de cada parcela"
             />
           ) : (
             <InputField
@@ -155,6 +158,7 @@ export default function SimulationScreen() {
               placeholder="0.00"
               suffix="%"
               error={errors.rate}
+              helperText="Digite a taxa de juros desejada"
             />
           )}
         </View>

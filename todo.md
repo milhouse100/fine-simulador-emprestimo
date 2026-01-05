@@ -54,3 +54,11 @@
 - [ ] Otimizar performance
 - [ ] Criar checkpoint final
 - [ ] Entregar ao usuário
+
+## Fase 13: Alterações Solicitadas pelo Usuário
+- [x] Substituir logo por arquivo finefundovazio.png
+- [x] Usar logo como título na Home Screen
+- [x] Adicionar link para finebr.com abaixo do título
+- [x] Limitar parcelas: mínimo 1, máximo 36
+- [x] Tabela de parcelas com colunas dinâmicas por tipo
+- [x] Aplicar princípios UX/UI para responsividade e espaçamentos

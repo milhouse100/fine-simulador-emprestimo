@@ -27,8 +27,8 @@ export function ActionButton({
   };
 
   const sizeClasses = {
-    small: 'px-4 py-2',
-    medium: 'px-6 py-3',
+    small: 'px-4 py-2.5',
+    medium: 'px-6 py-3.5',
     large: 'px-8 py-4',
   };
 
@@ -50,8 +50,8 @@ export function ActionButton({
       disabled={disabled}
       style={({ pressed }) => [
         {
-          transform: [{ scale: pressed && !disabled ? 0.97 : 1 }],
-          opacity: disabled ? 0.5 : pressed ? 0.9 : 1,
+          transform: [{ scale: pressed && !disabled ? 0.96 : 1 }],
+          opacity: disabled ? 0.5 : pressed ? 0.85 : 1,
         },
       ]}
       className={cn(
