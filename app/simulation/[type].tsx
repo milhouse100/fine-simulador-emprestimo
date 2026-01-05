@@ -169,6 +169,7 @@ export default function SimulationScreen() {
             label="Simular"
             onPress={handleSimulate}
             variant="primary"
+            size="large"
             fullWidth
             disabled={loading}
           />
@@ -176,6 +177,7 @@ export default function SimulationScreen() {
             label="Limpar"
             onPress={handleClear}
             variant="secondary"
+            size="large"
             fullWidth
           />
         </View>

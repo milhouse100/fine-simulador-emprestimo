@@ -47,18 +47,7 @@ export default function ResultsScreen() {
     }
   };
 
-  const handleCopyResults = async () => {
-    try {
-      const message = `FINE - Simulador de Empréstimo\n\nTipo: ${LOAN_TYPE_NAMES[input.type]}\nPrincipal: ${formatCurrency(input.principal)}\nParcelas: ${input.parcels}\nTotal a Pagar: ${formatCurrency(totalValue)}\nJuros: ${formatCurrency(totalInterest)} (${formatPercentage(interestPercentage)})`;
 
-      await Share.share({
-        message,
-        title: 'Simulação de Empréstimo FINE',
-      });
-    } catch (error) {
-      Alert.alert('Aviso', 'Resultados copiados para compartilhamento');
-    }
-  };
 
   return (
     <ScreenContainer className="p-6">
@@ -150,24 +139,21 @@ export default function ResultsScreen() {
             label="Compartilhar"
             onPress={handleShare}
             variant="primary"
-            fullWidth
-          />
-          <ActionButton
-            label="Copiar Resultados"
-            onPress={handleCopyResults}
-            variant="secondary"
+            size="large"
             fullWidth
           />
           <ActionButton
             label="Editar Simulação"
             onPress={() => router.back()}
             variant="outline"
+            size="large"
             fullWidth
           />
           <ActionButton
             label="Nova Simulação"
             onPress={() => router.push('/')}
             variant="secondary"
+            size="large"
             fullWidth
           />
         </View>

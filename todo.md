@@ -62,3 +62,9 @@
 - [x] Limitar parcelas: mínimo 1, máximo 36
 - [x] Tabela de parcelas com colunas dinâmicas por tipo
 - [x] Aplicar princípios UX/UI para responsividade e espaçamentos
+
+## Fase 14: Correções Solicitadas pelo Usuário
+- [x] Restaurar coluna Principal na tabela de "Apenas Juros"
+- [x] Substituir emojis por ícones modernos e minimalistas
+- [x] Aumentar tamanho dos botões
+- [x] Remover botão "Copiar Resultados"

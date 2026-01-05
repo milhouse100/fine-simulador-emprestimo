@@ -7,7 +7,17 @@ interface LoanCardProps {
   onPress: () => void;
 }
 
+// Mapa de ícones minimalistas por tipo
+const ICON_MAP: Record<string, string> = {
+  price: '📊',
+  'fixed-parcel': '💵',
+  'interest-only': '📈',
+  'simple-interest': '∑',
+};
+
 export function LoanCard({ loan, onPress }: LoanCardProps) {
+  const icon = ICON_MAP[loan.id] || '📊';
+
   return (
     <Pressable
       onPress={onPress}
@@ -26,7 +36,7 @@ export function LoanCard({ loan, onPress }: LoanCardProps) {
             className="w-14 h-14 rounded-full items-center justify-center mr-4 flex-shrink-0"
             style={{ backgroundColor: loan.color }}
           >
-            <Text className="text-2xl">{loan.icon}</Text>
+            <Text className="text-2xl">{icon}</Text>
           </View>
           <View className="flex-1">
             <Text className="text-lg font-bold text-foreground leading-tight">

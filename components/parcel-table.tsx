@@ -9,9 +9,9 @@ interface ParcelTableProps {
 
 export function ParcelTable({ parcels, loanType }: ParcelTableProps) {
   // Determinar quais colunas mostrar baseado no tipo de empréstimo
-  const showPrincipal = loanType !== 'interest-only';
+  const showPrincipal = true; // Sempre mostrar Principal
   const showInterest = loanType !== 'simple-interest';
-  const showBalance = loanType !== 'interest-only';
+  const showBalance = true; // Sempre mostrar Saldo
 
   // Definir colunas dinamicamente
   const columns = [
