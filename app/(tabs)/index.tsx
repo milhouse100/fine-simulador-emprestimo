@@ -1,46 +1,89 @@
-import { ScrollView, Text, View, TouchableOpacity } from "react-native";
+import { ScrollView, Text, View } from 'react-native';
+import { useRouter } from 'expo-router';
+import { ScreenContainer } from '@/components/screen-container';
+import { LoanCard } from '@/components/loan-card';
+import { LoanTypeInfo } from '@/lib/types';
 
-import { ScreenContainer } from "@/components/screen-container";
+const LOAN_TYPES: LoanTypeInfo[] = [
+  {
+    id: 'price',
+    name: 'PRICE Adaptado',
+    description:
+      'Juros distribuídos igualmente entre as parcelas. Valor da parcela = (Principal + Juros) / Parcelas',
+    icon: '📊',
+    color: '#00df82',
+  },
+  {
+    id: 'fixed-parcel',
+    name: 'Valor da Parcela',
+    description:
+      'Você define o valor fixo de cada parcela. O lucro é a diferença entre o total e o principal.',
+    icon: '💰',
+    color: '#00df82',
+  },
+  {
+    id: 'interest-only',
+    name: 'Apenas Juros',
+    description:
+      'Paga apenas os juros nas parcelas. O principal é quitado em uma transação separada.',
+    icon: '📈',
+    color: '#00df82',
+  },
+  {
+    id: 'simple-interest',
+    name: 'Juros Simples',
+    description:
+      'Juros calculados sobre o valor original. Parcela = (Principal / Parcelas) + Juros',
+    icon: '🧮',
+    color: '#00df82',
+  },
+];
 
-/**
- * Home Screen - NativeWind Example
- *
- * This template uses NativeWind (Tailwind CSS for React Native).
- * You can use familiar Tailwind classes directly in className props.
- *
- * Key patterns:
- * - Use `className` instead of `style` for most styling
- * - Theme colors: use tokens directly (bg-background, text-foreground, bg-primary, etc.); no dark: prefix needed
- * - Responsive: standard Tailwind breakpoints work on web
- * - Custom colors defined in tailwind.config.js
- */
 export default function HomeScreen() {
+  const router = useRouter();
+
+  const handleLoanTypePress = (loanType: LoanTypeInfo) => {
+    router.push({
+      pathname: '/simulation/[type]',
+      params: { type: loanType.id },
+    });
+  };
+
   return (
     <ScreenContainer className="p-6">
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <View className="flex-1 gap-8">
-          {/* Hero Section */}
-          <View className="items-center gap-2">
-            <Text className="text-4xl font-bold text-foreground">Welcome</Text>
-            <Text className="text-base text-muted text-center">
-              Edit app/(tabs)/index.tsx to get started
-            </Text>
-          </View>
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        showsVerticalScrollIndicator={false}
+      >
+        {/* Header */}
+        <View className="mb-8">
+          <Text className="text-4xl font-bold text-foreground mb-2">
+            FINE
+          </Text>
+          <Text className="text-base text-muted">
+            Simulador de Empréstimo
+          </Text>
+          <Text className="text-sm text-muted mt-2">
+            Escolha o tipo de simulação desejado
+          </Text>
+        </View>
 
-          {/* Example Card */}
-          <View className="w-full max-w-sm self-center bg-surface rounded-2xl p-6 shadow-sm border border-border">
-            <Text className="text-lg font-semibold text-foreground mb-2">NativeWind Ready</Text>
-            <Text className="text-sm text-muted leading-relaxed">
-              Use Tailwind CSS classes directly in your React Native components.
-            </Text>
-          </View>
+        {/* Loan Type Cards */}
+        <View className="gap-0">
+          {LOAN_TYPES.map((loan) => (
+            <LoanCard
+              key={loan.id}
+              loan={loan}
+              onPress={() => handleLoanTypePress(loan)}
+            />
+          ))}
+        </View>
 
-          {/* Example Button */}
-          <View className="items-center">
-            <TouchableOpacity className="bg-primary px-6 py-3 rounded-full active:opacity-80">
-              <Text className="text-background font-semibold">Get Started</Text>
-            </TouchableOpacity>
-          </View>
+        {/* Footer Info */}
+        <View className="mt-8 p-4 bg-surface rounded-lg border border-border">
+          <Text className="text-xs text-muted text-center">
+            Simule diferentes tipos de empréstimo e veja o retorno em R$ e %.
+          </Text>
         </View>
       </ScrollView>
     </ScreenContainer>
