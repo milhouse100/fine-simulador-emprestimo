@@ -56,7 +56,7 @@ export default function HomeScreen() {
         showsVerticalScrollIndicator={false}
       >
         {/* Logo Header */}
-        <View className="mb-6 items-center">
+        <View className="mb-2 items-center">
           <Image
             source={require('@/assets/images/logo.png')}
             style={{ width: 140, height: 90 }}

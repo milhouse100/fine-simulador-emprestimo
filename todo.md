@@ -68,3 +68,10 @@
 - [x] Substituir emojis por ícones modernos e minimalistas
 - [x] Aumentar tamanho dos botões
 - [x] Remover botão "Copiar Resultados"
+
+## Fase 15: Correções de UI/UX Solicitadas
+- [x] Trocar ícone do app pelo SVG anexado
+- [x] Aumentar espaçamento entre botão voltar e títulos
+- [x] Remover emojis dos cards, substituir por ícones Lucide
+- [x] Diminuir espaçamento entre logo e "Visite finebr.com" para 8px
+- [x] Simplificar tabela: apenas Nº e Valor (exceto "Apenas Juros")

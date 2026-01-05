@@ -63,7 +63,7 @@ export default function ResultsScreen() {
             variant="outline"
             size="small"
           />
-          <Text className="text-3xl font-bold text-foreground mt-5 mb-2">
+          <Text className="text-3xl font-bold text-foreground mt-8 mb-2">
             Resultado
           </Text>
           <Text className="text-sm text-muted">

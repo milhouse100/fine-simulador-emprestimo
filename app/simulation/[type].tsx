@@ -109,8 +109,8 @@ export default function SimulationScreen() {
             variant="outline"
             size="small"
           />
-          <Text className="text-3xl font-bold text-foreground mt-5 mb-2">
-            {loanTypeLabels[type || '']}
+          <Text className="text-3xl font-bold text-foreground mt-8 mb-2">
+            Resultado
           </Text>
           <Text className="text-sm text-muted">
             Preencha os dados para simular

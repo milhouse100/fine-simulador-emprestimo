@@ -9,18 +9,20 @@ interface ParcelTableProps {
 
 export function ParcelTable({ parcels, loanType }: ParcelTableProps) {
   // Determinar quais colunas mostrar baseado no tipo de empréstimo
-  const showPrincipal = true; // Sempre mostrar Principal
-  const showInterest = loanType !== 'simple-interest';
-  const showBalance = true; // Sempre mostrar Saldo
+  const isInterestOnly = loanType === 'interest-only';
 
   // Definir colunas dinamicamente
-  const columns = [
-    { key: 'number', label: 'Parc.', width: 50 },
-    { key: 'value', label: 'Valor', width: 70 },
-    ...(showInterest ? [{ key: 'interest', label: 'Juros', width: 70 }] : []),
-    ...(showPrincipal ? [{ key: 'principal', label: 'Principal', width: 80 }] : []),
-    ...(showBalance ? [{ key: 'balance', label: 'Saldo', width: 70 }] : []),
-  ];
+  const columns = isInterestOnly
+    ? [
+        { key: 'number', label: 'Parc.', width: 50 },
+        { key: 'value', label: 'Valor', width: 70 },
+        { key: 'principal', label: 'Principal', width: 80 },
+        { key: 'balance', label: 'Saldo', width: 70 },
+      ]
+    : [
+        { key: 'number', label: 'Parc.', width: 60 },
+        { key: 'value', label: 'Valor', width: 100 },
+      ];
 
   const totalWidth = columns.reduce((sum, col) => sum + col.width, 0);
 
@@ -69,9 +71,6 @@ export function ParcelTable({ parcels, loanType }: ParcelTableProps) {
                   case 'value':
                     cellValue = formatCurrency(parcel.value);
                     break;
-                  case 'interest':
-                    cellValue = formatCurrency(parcel.interest);
-                    break;
                   case 'principal':
                     cellValue = formatCurrency(parcel.principal);
                     break;
@@ -107,23 +106,17 @@ export function ParcelTable({ parcels, loanType }: ParcelTableProps) {
           <View className="w-2 h-2 rounded-full bg-primary mr-2" />
           <Text className="text-xs text-muted">Valor = Valor da parcela</Text>
         </View>
-        {showInterest && (
-          <View className="flex-row items-center">
-            <View className="w-2 h-2 rounded-full bg-primary mr-2" />
-            <Text className="text-xs text-muted">Juros = Juros da parcela</Text>
-          </View>
-        )}
-        {showPrincipal && (
-          <View className="flex-row items-center">
-            <View className="w-2 h-2 rounded-full bg-primary mr-2" />
-            <Text className="text-xs text-muted">Principal = Amortização do principal</Text>
-          </View>
-        )}
-        {showBalance && (
-          <View className="flex-row items-center">
-            <View className="w-2 h-2 rounded-full bg-primary mr-2" />
-            <Text className="text-xs text-muted">Saldo = Saldo devedor restante</Text>
-          </View>
+        {isInterestOnly && (
+          <>
+            <View className="flex-row items-center">
+              <View className="w-2 h-2 rounded-full bg-primary mr-2" />
+              <Text className="text-xs text-muted">Principal = Amortização do principal</Text>
+            </View>
+            <View className="flex-row items-center">
+              <View className="w-2 h-2 rounded-full bg-primary mr-2" />
+              <Text className="text-xs text-muted">Saldo = Saldo devedor restante</Text>
+            </View>
+          </>
         )}
       </View>
     </View>
