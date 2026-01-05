@@ -75,3 +75,8 @@
 - [x] Remover emojis dos cards, substituir por ícones Lucide
 - [x] Diminuir espaçamento entre logo e "Visite finebr.com" para 8px
 - [x] Simplificar tabela: apenas Nº e Valor (exceto "Apenas Juros")
+
+## Fase 16: Bug Fix - Clique nos Cards
+- [x] Corrigir problema de clique nos cards de simulação no mobile
+- [x] Verificar Pressable component e navegação
+- [x] Testar em dispositivo mobile
